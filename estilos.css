@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.puntos {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.contenedor-juego {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 80vw;
+    height: 80vh;
+    overflow: hidden;
+}
+
+.tarjeta {
+    width: calc(10% - 10px); /* Ajusta este valor para que las tarjetas se ajusten mejor */
+    height: calc(20% - 10px); /* Ajusta este valor para que las tarjetas se ajusten mejor */
+    background-color: #fff;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.tarjeta:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.tarjeta.no-coincide {
+    background-color: red; /* Color rojo para indicar no coincidencia */
+    color: white; /* Cambia el color del texto a blanco para mejorar la visibilidad */
+}
