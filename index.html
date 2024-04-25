@@ -5,16 +5,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memotest</title>
     <link rel="stylesheet" href="estilos.css">
+    <style>
+        .controls {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            z-index: 1000;
+        }
+
+        #toggleAudio {
+            margin-bottom: 10px;
+        }
+
+        #volumenControl {
+            margin-top: 10px;
+            left: calc(1px + 150px + 10px); /* Ajuste para que comience después del botón de audio */
+        }
+
+        /* Estilos para la animación Pixel Art en el footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .game-character {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: #ff0;
+            position: relative;
+            animation: moveCharacter 4s linear infinite; /* Animación de movimiento */
+        }
+
+        /* Animación para mover el personaje del juego */
+        @keyframes moveCharacter {
+            0% {
+                left: -2500px; /* Comienza fuera del área visible en el margen izquierdo */
+            }
+            100% {
+                left: calc(100% + 300px); /* Termina fuera del área visible en el margen derecho */
+            }
+        }
+
+       
+    
+    </style>
 </head>
 <body>
+    <div class="controls">
+        <button id="toggleAudio">Play music</button> 
+        <input type="range" id="volumenControl" min="0" max="1" step="0.1" value="1">
+    </div>
+
+    <audio id="musica" loop>
+        <source src="Pixel Groove (1).mp3" type="audio/mp3">
+        <!-- Reemplaza "tu_archivo_de_musica.mp3" con la ruta correcta de tu archivo de música -->
+    </audio>
+    
     <h1>Memotest</h1>
     <div class="puntos">Puntos: <span id="puntos">0</span></div>
-    <div class="intentos">Intentos: <span id="intentos">0</span></div>  <!-- Nuevo contador de intentos -->
-    <div class="nivel">Nivel: <span id="nivel">1</span></div>  <!-- Nuevo indicador de nivel -->
+    <div class="intentos">Intentos: <span id="intentos">0</span></div>
+    <div class="nivel">Nivel: <span id="nivel">1</span></div>
     <button id="reset">Resetear Juego</button>
     <section class="contenedor-juego">
         <!-- Las tarjetas se generan dinámicamente con JavaScript -->
     </section>
+
+    <!-- Animación del personaje del juego en el footer -->
+    <footer>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+        <div class="game-character"></div>
+
+
+    </footer>
+
     <script src="script.js"></script>
+    <script>
+        const botonAudio = document.getElementById('toggleAudio');
+        const musica = document.getElementById('musica');
+        const volumenControl = document.getElementById('volumenControl');
+
+        botonAudio.addEventListener('click', () => {
+            if (musica.paused) {
+                musica.play();
+                botonAudio.textContent = 'Stop music';
+            } else {
+                musica.pause();
+                botonAudio.textContent = 'Play music';
+            }
+        });
+
+        volumenControl.addEventListener('input', () => {
+            musica.volume = volumenControl.value;
+        });
+    </script>
 </body>
 </html>

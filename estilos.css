@@ -1,45 +1,56 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Press Start 2P', monospace;
+    background-color: #000;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
     margin: 0;
-    background-color: #f0f0f0;
 }
 
 h1 {
-    color: #333;
+    color: #FFF;
     margin-bottom: 10px;
 }
 
-.puntos {
-    font-size: 20px;
+.puntos, .intentos, .nivel {
+    font-size: 16px;
     margin-bottom: 10px;
+    color: #CCC;
 }
 
 .contenedor-juego {
+    width: 50vw;
+    height: 50vh;
+    overflow: hidden;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 80vw;
-    height: 80vh;
-    overflow: hidden;
+}
+
+.contenedor-nivel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-auto-rows: minmax(auto, 1fr);
+    gap: 10px;
+    align-items: center;
 }
 
 .tarjeta {
-    width: calc(10% - 10px); /* Ajusta este valor para que las tarjetas se ajusten mejor */
-    height: calc(20% - 10px); /* Ajusta este valor para que las tarjetas se ajusten mejor */
-    background-color: #fff;
-    margin: 5px;
+    width: 8vw;
+    height: 8vh;
+    min-width: 64px;
+    min-height: 64px;
+    background-color: #336699;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 0;
-    border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    border: 4px solid #000;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
     cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -49,7 +60,121 @@ h1 {
     box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
+.tarjeta.mostrar {
+    animation: mostrar 0.5s ease-in-out forwards;
+    box-shadow: 0 0 10px rgba(0,255,0,0.5);
+}
+
 .tarjeta.no-coincide {
-    background-color: red; /* Color rojo para indicar no coincidencia */
-    color: white; /* Cambia el color del texto a blanco para mejorar la visibilidad */
+    background-color: #F00;
+    color: #FFF;
+    animation: noCoincide 0.5s ease-in-out forwards;
+}
+
+@keyframes mostrar {
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(180deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+@keyframes noCoincide {
+    0% {
+        transform: rotateX(0deg);
+    }
+    50% {
+        transform: rotateX(-15deg);
+    }
+    100% {
+        transform: rotateX(0deg);
+    }
+}
+
+/* Consultas de medios para pantallas pequeñas */
+@media (max-width: 768px) {
+    .contenedor-nivel {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .contenedor-nivel {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    }
+}
+
+.alert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #FFF;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 5px;
+    z-index: 1000; /* Asegura que esté sobre otros elementos */
+}
+.puntos, .intentos, .nivel {
+    font-size: 24px; /* Aumentamos el tamaño de fuente */
+    margin-bottom: 20px; /* Incrementamos el espacio inferior */
+    color: #CCC;
+}
+
+#reset {
+    margin-top: 30px; /* Incrementamos el espacio superior */
+    padding: 15px 30px; /* Aumentamos el tamaño del botón */
+    border: none;
+    border-radius: 10px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 20px; /* Aumentamos el tamaño de fuente */
+    cursor: pointer;
+}
+
+#reset:hover {
+    background-color: #45a049;
+}
+
+#toggleAudio {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+
+
+#volumenControl {
+    position: fixed;
+    top: 10px;
+    left: calc(1px + 150px + 10px); /* Posición inicial al final del botón de audio */
+}
+
+
+/* Animación de cambio de color para los game characters */
+@keyframes changeColor {
+    0% {
+        background-color: #ff0; /* Color inicial */
+    }
+    50% {
+        background-color: #f00; /* Color intermedio */
+    }
+    100% {
+        background-color: #00f; /* Color final */
+    }
+}
+
+.music-prompt {
+    position: fixed;
+    top: 50px; /* Ajusta esto según la posición del botón en tu diseño */
+    left: 50%; /* Centra el mensaje respecto al ancho */
+    transform: translateX(-50%); /* Asegura que el centro del div sea el punto medio */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001; /* Asegúrate de que esté sobre otros elementos */
 }
