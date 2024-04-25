@@ -200,8 +200,7 @@ h1 {
     margin: 15% auto; /* 15% desde el top y centrado */
     padding: 20px;
     border: 1px solid #888;
-    width: 30%; /* Podría ser más o menos, dependiendo del tamaño de la pantalla */
-    border-radius: 10px;
+    width: 80%; /* Podría ser más o menos, dependiendo del tamaño de la pantalla */
 }
 
 .close {
@@ -225,66 +224,49 @@ h1 {
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 10px;
+    
+}
+
+@media (max-width: 600px) {
+    .contenedor-juego {
+        grid-template-columns: repeat(3, 1fr); /* Ajusta según el espacio disponible */
+        padding: 10px;
+        gap: 5px;
+    }
+
+    .puntos, .intentos, .nivel {
+        font-size: 14px; /* Reduce el tamaño de la fuente para ahorrar espacio */
+    }
+
+    #reset {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    footer {
+        padding: 5px;
+        font-size: 12px; /* Reduce el tamaño de la fuente para el texto del footer */
+    }
+
+    .game-character {
+        width: 20px;
+        height: 20px; /* Reduce el tamaño de los caracteres en el juego */
+    }
 }
 
 
-/* Estilos para el mensaje de alerta de nivel completado */
-.alert-nivel {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    background-color: #f8d7da; /* Color de fondo */
-    color: #721c24; /* Color del texto */
-    border: 2px solid #f5c6cb; /* Borde */
-    border-radius: 5px;
-    z-index: 1000;
-    display: none; /* Lo ocultamos inicialmente */
+@media (max-width: 600px) {
+    .controls {
+        position: static;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    #toggleAudio, #volumenControl {
+        font-size: 14px; /* Adecua el tamaño de los botones y controles deslizantes */
+        padding: 5px;
+    }
 }
-
-.alert-nivel p {
-    margin: 0; /* Elimina el margen predeterminado del párrafo */
-}
-
-.alert-nivel button {
-    background-color: #dc3545; /* Color de fondo del botón */
-    color: white; /* Color del texto del botón */
-    border: none; /* Borde del botón */
-    padding: 10px 20px; /* Espaciado interno del botón */
-    border-radius: 5px; /* Borde redondeado */
-    cursor: pointer; /* Cursor al pasar el ratón sobre el botón */
-}
-
-.alert-nivel button:hover {
-    background-color: #c82333; /* Color de fondo del botón al pasar el ratón */
-}
-
-
-.modal {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 500px;
-}
-
-.modal .close {
-    float: right;
-    font-size: 28px;
-    cursor: pointer;
-}
-

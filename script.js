@@ -34,12 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
             tarjeta.classList.add('tarjeta');
             tarjeta.setAttribute('data-valor', valor);
             contenedorJuego.appendChild(tarjeta);
+            // Ensure initial visibility and styling is correct
+            tarjeta.style.display = 'flex'; // Make sure it is not 'none'
+            tarjeta.style.visibility = 'visible'; // Ensure it is not 'hidden'
             tarjeta.addEventListener('click', () => {
                 if (!espera && !animacionEnProgreso) handleClick(tarjeta);
             });
         });
         document.getElementById('nivel').textContent = nivel;
-        document.getElementById('puntos').textContent = puntos; // Asegúrate de actualizar los puntos aquí
+        document.getElementById('puntos').textContent = puntos;
     }
     
 
@@ -99,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkNivelCompleto() {
         const tarjetasReveladas = document.querySelectorAll('.tarjeta[style*="visibility: hidden"]');
         if (tarjetasReveladas.length === ((nivel + 1) * 2)) {
-            if (nivel < 7) {
+            if (nivel < 4) {
                 nivel++;
                 setTimeout(() => {
                     alert('¡Nivel completado!');
