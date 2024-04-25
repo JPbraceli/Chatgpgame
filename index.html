@@ -56,10 +56,12 @@
             }
         }
 
+        
        
     
     </style>
 </head>
+
 <body>
     <div class="controls">
         <button id="toggleAudio">Play music</button> 
@@ -139,5 +141,24 @@
             musica.volume = volumenControl.value;
         });
     </script>
+
+    <!-- Modal para resetear juego -->
+<div id="modalPerdida" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Upss.. perdiste. ¡Vuelve a intentarlo!</p>
+        <button id="resetModal">Resetear juego</button>
+    </div>
+</div>
+
+
+<!-- Agrega este div para el mensaje de alerta de nivel completado -->
+<div class="alert-nivel" id="alertaNivel">
+    <p>¡Nivel completado!</p>
+    <button id="btnSiguienteNivel">Siguiente Nivel</button>
+</div>
+
+
+
 </body>
 </html>

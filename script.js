@@ -1,32 +1,47 @@
 document.addEventListener('DOMContentLoaded', () => {
     const contenedorJuego = document.querySelector('.contenedor-juego');
-    let tarjetaRevelada = null;
-    let puntos = 0;
+    const modalPerdida = document.getElementById('modalPerdida');
+    const btnCerrar = document.querySelector('.close');
+    const btnResetModal = document.getElementById('resetModal');
+
+    let puntos = 10;
     let intentos = 0;
-    let nivel = 1; // Inicializa el nivel
-    let espera = false; // Controla si se está esperando para ocultar tarjetas
-    let animacionEnProgreso = false; // Indica si hay una animación en curso
+    let nivel = 1;
+    let tarjetaRevelada = null;
+    let espera = false;
+    let animacionEnProgreso = false;
+
+    btnCerrar.onclick = function() {
+        modalPerdida.style.display = "none";
+    }
+
+    btnResetModal.addEventListener('click', () => {
+        reiniciarJuego();
+        modalPerdida.style.display = "none";
+    });
 
     function inicializarJuego() {
-        contenedorJuego.innerHTML = ''; // Limpiamos el contenedor
-        let pares = nivel + 1; // Número de pares aumenta con el nivel
+        contenedorJuego.innerHTML = '';
+        let pares = nivel + 1;
         let numeros = [];
         for (let i = 1; i <= pares; i++) {
             numeros.push(i, i);
         }
-        numeros.sort(() => Math.random() - 0.5); // Mezclar aleatoriamente
-
+        numeros.sort(() => Math.random() - 0.5);
+    
         numeros.forEach(valor => {
             const tarjeta = document.createElement('div');
             tarjeta.classList.add('tarjeta');
             tarjeta.setAttribute('data-valor', valor);
             contenedorJuego.appendChild(tarjeta);
             tarjeta.addEventListener('click', () => {
-                if (!espera && !animacionEnProgreso) handleClick(tarjeta); // Verifica si no hay animación en progreso
+                if (!espera && !animacionEnProgreso) handleClick(tarjeta);
             });
         });
-        document.getElementById('nivel').textContent = nivel; // Actualiza el indicador de nivel en el DOM
+        document.getElementById('nivel').textContent = nivel;
+        document.getElementById('puntos').textContent = puntos; // Asegúrate de actualizar los puntos aquí
     }
+    
 
     function handleClick(tarjeta) {
         if (!tarjetaRevelada) {
@@ -35,10 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
             tarjeta.innerHTML = tarjeta.getAttribute('data-valor');
             tarjeta.style.fontSize = '36px';
         } else if (tarjeta === tarjetaRevelada) {
-            // Ignorar clics en la misma tarjeta
+
         } else {
             intentos++;
             document.getElementById('intentos').textContent = intentos;
+
             if (tarjeta.getAttribute('data-valor') === tarjetaRevelada.getAttribute('data-valor')) {
                 tarjeta.style.backgroundColor = 'lightgreen';
                 tarjeta.innerHTML = tarjeta.getAttribute('data-valor');
@@ -48,27 +64,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 tarjetaRevelada.style.fontSize = '36px';
                 puntos += 10;
                 document.getElementById('puntos').textContent = puntos;
-                animacionEnProgreso = true; // Establece que hay una animación en curso
-                setTimeout(() => { // Hacer que las tarjetas coincidentes se oculten
+                animacionEnProgreso = true;
+                setTimeout(() => {
                     tarjeta.style.visibility = 'hidden';
                     tarjetaRevelada.style.visibility = 'hidden';
                     tarjetaRevelada = null;
-                    animacionEnProgreso = false; // La animación ha terminado
-                    checkNivelCompleto(); // Verificar si se completó el nivel después de ocultar las tarjetas
+                    animacionEnProgreso = false;
+                    checkNivelCompleto();
                 }, 1000);
             } else {
-                espera = true; // Impide más clics mientras se muestra el error
-                tarjeta.style.backgroundColor = 'red'; // Resalta la tarjeta incorrecta en rojo
+                puntos -= 5;
+                puntos = Math.max(0, puntos);
+                document.getElementById('puntos').textContent = puntos;
+                if (puntos === 0) {
+                    modalPerdida.style.display = "block";
+                    return;
+                }
+                espera = true;
+                tarjeta.style.backgroundColor = 'red';
                 setTimeout(() => {
-                    tarjeta.style.backgroundColor = ''; // Restablecer color de fondo
-                    tarjetaRevelada.style.backgroundColor = ''; // Restablecer color de fondo
+                    tarjeta.style.backgroundColor = '';
+                    tarjetaRevelada.style.backgroundColor = '';
                     tarjetaRevelada.innerHTML = '';
                     tarjetaRevelada.style.fontSize = '0';
                     tarjeta.innerHTML = '';
                     tarjeta.style.fontSize = '0';
                     tarjetaRevelada = null;
-                    espera = false; // Permite clics de nuevo después de ocultar las tarjetas
-                }, 250); // Cambiado a 1/4 de segundo (250 milisegundos)
+                    espera = false;
+                }, 250);
             }
         }
     }
@@ -78,28 +101,32 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tarjetasReveladas.length === ((nivel + 1) * 2)) {
             if (nivel < 7) {
                 nivel++;
-                setTimeout(() => { // Mostrar alerta más rápido
-                    alert('¡Nivel completado!'); // Muestra una alerta cuando se completa el nivel
-                    inicializarJuego(); // Inicializar el siguiente nivel
-                }, 250); // Cambiado a 1/4 de segundo (250 milisegundos)
+                setTimeout(() => {
+                    alert('¡Nivel completado!');
+                    inicializarJuego();
+                }, 250);
             } else {
                 alert('¡Felicidades! Completaste todos los niveles.');
             }
         }
     }
 
-    document.getElementById('reset').addEventListener('click', () => {
-        puntos = 0;
+    function reiniciarJuego() {
+        puntos = 10;
         intentos = 0;
         nivel = 1;
-        document.getElementById('puntos').textContent = '0';
+        document.getElementById('puntos').textContent = '10';
         document.getElementById('intentos').textContent = '0';
         document.getElementById('nivel').textContent = '1';
         tarjetaRevelada = null;
         espera = false;
-        animacionEnProgreso = false; // Reinicia la bandera de animación en progreso
+        animacionEnProgreso = false;
         inicializarJuego();
+    }
+
+    document.getElementById('reset').addEventListener('click', () => {
+        reiniciarJuego();
     });
 
-    inicializarJuego(); // Inicializar el juego por primera vez
+    inicializarJuego();
 });
